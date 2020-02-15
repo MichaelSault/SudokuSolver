@@ -11,27 +11,68 @@ suduko = np.array([[None, None, None, 7, None, None, 4, None, 1],
 [8, 1, None, None, None, None, 2, None, None],
 [4, None, 2, None, None, 9, None, None, None]])
 
-print(suduko)
+correct = np.array([[3, 9, 5, 7, 2, 6, 4, 8, 1], 
+[7, 8, 6, 5, 4, 1, 9, 3, 2],
+[2, 4, 1, 3, 9, 8, 6, 5, 7],
+[6, 3, 9, 2, 1, 4, 8, 7, 5],
+[1, 7, 4, 8, 6, 5, 3, 2, 9],
+[5, 2, 8, 9, 7, 3, 1, 4, 6],
+[9, 6, 7, 4, 3, 2, 5, 1, 8],
+[8, 1, 3, 6, 5, 7, 2, 9, 4],
+[4, 5, 2, 1, 8, 9, 7, 6, 3]])
 
-#function to check all rows
-def checkRow(row):
+incorrect = np.array([[2, 9, 5, 7, 2, 9, 4, 8, 1], 
+[7, 8, 6, 5, 4, 1, 9, 3, 2],
+[2, 4, 1, 3, 9, 8, 2, 5, 7],
+[6, 3, 9, 2, 1, 4, 8, 7, 5],
+[1, 7, 4, 4, 6, 5, 3, 2, 9],
+[5, 2, 8, 9, 7, 3, 1, 4, 6],
+[9, 6, 7, 4, 3, 2, 5, 1, 8],
+[8, 1, 3, 6, 5, 7, 2, 9, 4],
+[4, 5, 2, 1, 8, 9, 7, 1, 3]])
+print(incorrect)
+
+##################################################################
+###########CODE TO CHECK IF THE SOLUTION IS VALID#################
+##################################################################
+#detects errors in row logic
+def checkRows(array):
   for x in range(0,9):
     for y in range (0,9):
-      if (x != y):
-        if (suduko[x] == suduko[y]):
-          print(suduko[x])
-          print(suduko[y])
-          break
-  print(True)
+      for z in range (0,9):
+        if (y != z):
+          if (array[x][y] == array[x][z]):
+            print(x,y)
+            print(x,z)
+            print("error")
+  print("Finished Rows!")
 
-#function to check all cols
-def checkCol(colNum):
+#detects errors in col logic
+def checkCols(array):
   for x in range(0,9):
     for y in range(0,9):
-      print(x)
+      for z in range(0,9):
+        if (y != z):
+          if (array[y][x] == array[z][x]):
+            print(y, x)
+            print(z, x)
+            print("error")
+  print("Finished Cols!")
 
-#function to check each square
-def checkSquare():
+#detects errors in square logic
+def checkSquares(array):
+  for i in range(0, 9, 3):
+    for j in range(0, 9, 3):
+      for x in range(0, 3):
+        for y in range(0, 3):
+          for z in range(0, 3):
+            if (y != z):
+              if (array[x+i][y+j] == array[x+i][z+j]):
+                print(x+i, y+j)
+                print(x+i, z+j)
+                print("error")
+  print("Finished Squares!")
 
-
-checkRow(s)
+checkRows(incorrect)
+checkCols(incorrect)
+checkSquares(incorrect)
