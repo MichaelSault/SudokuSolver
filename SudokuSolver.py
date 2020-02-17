@@ -30,7 +30,7 @@ incorrect = np.array([[2, 9, 5, 7, 2, 9, 4, 8, 1],
 [9, 6, 7, 4, 3, 2, 5, 1, 8],
 [8, 1, 3, 6, 5, 7, 2, 9, 4],
 [4, 5, 2, 1, 8, 9, 7, 1, 3]])
-print(incorrect)
+#print(incorrect)
 
 ##################################################################
 ###########CODE TO CHECK IF THE SOLUTION IS VALID#################
@@ -45,7 +45,9 @@ def checkRows(array):
             print(x,y)
             print(x,z)
             print("error")
+            return False
   print("Finished Rows!")
+  return True
 
 #detects errors in col logic
 def checkCols(array):
@@ -57,7 +59,9 @@ def checkCols(array):
             print(y, x)
             print(z, x)
             print("error")
+            return False
   print("Finished Cols!")
+  return True
 
 #detects errors in square logic
 def checkSquares(array):
@@ -71,8 +75,73 @@ def checkSquares(array):
                 print(x+i, y+j)
                 print(x+i, z+j)
                 print("error")
+                return False
   print("Finished Squares!")
+  return True
 
-checkRows(incorrect)
-checkCols(incorrect)
-checkSquares(incorrect)
+
+def checkSol(array):
+  if checkRows(array):
+    if checkCols(array):
+      if checkSquares(array):
+        print("Your Solution is Valid")
+        return True
+  print("Your Solution is NOT Valid")
+  return False
+
+checkSol(correct)
+checkSol(incorrect)
+
+
+##################################################################
+##############CODE TO FIND THE CORRECT SOLUTION###################
+##################################################################
+def findEmpty(array):
+  for x in range(0, 9):
+    for y in range(0, 9):
+      if (array[x][y] == None):
+         return (x, y) #tupple representation of row and col
+  return None
+
+def checkValid(array, num, pos):
+  #check row
+  for m in range(0, 9):
+    if array[pos[0]][m] == num and pos[1] != m:
+      return False
+
+  #check col
+  for m in range(0, 9):
+    if array[m][pos[1]] == num and pos[0] != m:
+      return False
+
+  #check box
+  boxX = pos[1] // 3
+  boxY = pos[0] // 3
+
+  for i in range(boxY * 3, boxY * 3 + 3):
+    for j in range(boxX * 3, boxX * 3 + 3):
+      if array[i][j] == num and (i,j) != pos:
+        return False
+
+  return True
+
+def solver(array):
+  find = findEmpty(array)
+  if not find:
+    return True
+  else:
+    row, col = find
+  
+  for i in range(1, 10):
+    if checkValid(array, i, (row, col)):
+      array[row][col] = i
+      if solver(array):
+        return True
+
+      array[row][col] = None
+
+  return False
+
+print(suduko)
+solver(suduko)
+print(suduko)
