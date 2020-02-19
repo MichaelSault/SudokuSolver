@@ -50,7 +50,7 @@ limitsCol = np.array([
   ['v', None, 'v', 'v', None, 'v', None, None, None],
   [None, None, None, None, None, None, None, None, None],
   [None, None, None, 'v', None, 'v', 'v', None, 'v'],
-  [None, 'v', 'v', None, None, None, '^', '^', '^'],
+  [None, 'v', 'v', '^', None, None, '^', '^', '^'],
   [None, None, None, None, None, None, None, None, None],
   [None, 'v', 'v', '^', None, None, None, '^', '^'],
   ['v', '^', None, None, '^', '^', None, 'v', None]])
@@ -204,6 +204,22 @@ def solver(array):
 
   return False
 
-print(suduko)
-solver(suduko)
-print(suduko)
+
+##################################################################
+################FANCY PRINT FUNCTION FOR BOARD####################
+##################################################################
+
+def printBoard(array):
+  print ("-------------------------------")
+  for i in range (0,9):
+    if i == 3 or i == 6:
+      print ("-------------------------------")
+    print ("|" , array[i][0:3], "|" , array[i][3:6], "|" , array[i][6:9], "|")
+  print ("-------------------------------")
+  print ('\n\n')
+
+
+  #####MAIN FUNCTION#####
+  printBoard(suduko)
+  solver(suduko)
+  printBoard(suduko)

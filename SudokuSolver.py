@@ -78,7 +78,7 @@ def checkSquares(array):
                 return False
   print("Finished Squares!")
   return True
-
+0
 
 def checkSol(array):
   if checkRows(array):
@@ -142,6 +142,22 @@ def solver(array):
 
   return False
 
-print(suduko)
+
+
+##################################################################
+################FANCY PRINT FUNCTION FOR BOARD####################
+##################################################################
+
+def printBoard(array):
+  print ("-------------------------------")
+  for i in range (0,9):
+    if i == 3 or i == 6:
+      print ("-------------------------------")
+    print ("|" , array[i][0:3], "|" , array[i][3:6], "|" , array[i][6:9], "|")
+  print ("-------------------------------")
+  print ('\n\n')
+
+
+printBoard(suduko)
 solver(suduko)
-print(suduko)
+printBoard(suduko)
